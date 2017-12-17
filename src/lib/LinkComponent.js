@@ -1,52 +1,37 @@
 'use strict';
 
+import PropTypes from 'prop-types';
 import React from 'react';
-let { View, StyleSheet, Text} = require('react-native');
-import {Field} from './Field';
+let { View, StyleSheet, Text } = require('react-native');
+import { Field } from './Field';
 
-
-export class LinkComponent extends React.Component{
-  constructor(props){
+export class LinkComponent extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {
-    }
+    this.state = {};
   }
-  handleLayoutChange(e){
-    let {x, y, width, height} = {... e.nativeEvent.layout};
+  handleLayoutChange(e) {
+    let { x, y, width, height } = { ...e.nativeEvent.layout };
 
     this.setState(e.nativeEvent.layout);
     //e.nativeEvent.layout: {x, y, width, height}}}.
   }
 
+  render() {
+    return (
+      <Field {...this.props}>
+        <View style={this.props.containerStyle} onLayout={this.handleLayoutChange.bind(this)}>
+          {this.props.iconLeft ? this.props.iconLeft : null}
+          <Text style={this.props.labelStyle}>{this.props.label}</Text>
 
-  render(){
-    return(<Field {...this.props}>
-      <View style={
-          this.props.containerStyle}
-        onLayout={this.handleLayoutChange.bind(this)}>
-
-        {(this.props.iconLeft)
-          ? this.props.iconLeft
-          : null
-        }
-        <Text
-          style={this.props.labelStyle}>
-            {this.props.label}
-        </Text>
-
-          {(this.props.iconRight)
-            ? this.props.iconRight
-            : null
-          }
-      </View>
-
-    </Field>
-  )
-}
-
+          {this.props.iconRight ? this.props.iconRight : null}
+        </View>
+      </Field>
+    );
+  }
 }
 
 LinkComponent.propTypes = {
-  labelStyle: Text.propTypes.style,
-  containerStyle: View.propTypes.style
-}
+  labelStyle: PropTypes.style,
+  containerStyle: PropTypes.style,
+};
