@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-let { View, StyleSheet, Text, Switch } = require('react-native');
+let { ViewPropTypes, View, StyleSheet, Text, Switch } = require('react-native');
 
 import { Field } from './Field';
 
@@ -47,6 +47,12 @@ export class SwitchComponent extends React.Component {
     );
   }
 }
+
+SwitchComponent.propTypes = {
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+  containerStyle: ViewPropTypes.style,
+  switchStyle: Switch.propTypes.style,
+};
 
 SwitchComponent.propTypes = {
   labelStyle: PropTypes.style,

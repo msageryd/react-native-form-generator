@@ -2,10 +2,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactNative, { Platform } from 'react-native';
+import ReactNative, {
+  View,
+  StyleSheet,
+  TextInput,
+  Text,
+  ViewPropTypes,
+  Platform,
+} from 'react-native';
 import { Field } from './Field.js';
-
-const { View, StyleSheet, TextInput, Text } = ReactNative;
 
 function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -189,7 +194,7 @@ export class InputComponent extends React.Component {
 // }
 
 InputComponent.propTypes = {
-  labelStyle: PropTypes.style,
-  inputStyle: PropTypes.style,
-  containerStyle: PropTypes.style,
+  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+  inputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+  containerStyle: ViewPropTypes.style,
 };
