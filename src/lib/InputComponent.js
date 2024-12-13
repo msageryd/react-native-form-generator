@@ -7,13 +7,13 @@ import ReactNative, {
   StyleSheet,
   TextInput,
   Text,
-  ViewPropTypes,
   Platform,
 } from 'react-native';
-import {Field} from './Field.js';
+import { Field } from './Field.js';
 
 function validateEmail(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (re.test(email)) return true;
   return 'Invalid email';
 }
@@ -45,7 +45,7 @@ export class InputComponent extends React.Component {
   }
 
   setValue(value) {
-    this.setState({value: value});
+    this.setState({ value: value });
     if (this.props.onChange) this.props.onChange(value);
     if (this.props.onValueChange) this.props.onValueChange(value);
   }
@@ -53,7 +53,7 @@ export class InputComponent extends React.Component {
     this.refs.inputBox.focus();
   }
   triggerValidation() {
-    this.setState({isValid: this.validate(this.state.value)});
+    this.setState({ isValid: this.validate(this.state.value) });
   }
   validate(value) {
     let validationResult;
@@ -101,7 +101,7 @@ export class InputComponent extends React.Component {
   }
   handleLayoutChange(e) {
     if (Platform.OS === 'ios') {
-      let {x, y, width, height} = {...e.nativeEvent.layout};
+      let { x, y, width, height } = { ...e.nativeEvent.layout };
 
       this.setState(e.nativeEvent.layout);
     }
@@ -110,9 +110,9 @@ export class InputComponent extends React.Component {
 
   handleLabelLayoutChange(e) {
     if (Platform.OS === 'ios') {
-      let {x, y, width, height} = {...e.nativeEvent.layout};
+      let { x, y, width, height } = { ...e.nativeEvent.layout };
 
-      this.setState({labelWidth: width});
+      this.setState({ labelWidth: width });
     }
     // //e.nativeEvent.layout: {x, y, width, height}}}.
   }
@@ -153,7 +153,10 @@ export class InputComponent extends React.Component {
     //   ]}
     return (
       <Field {...this.props}>
-        <View onLayout={this.handleLayoutChange} style={[this.props.containerStyle]}>
+        <View
+          onLayout={this.handleLayoutChange}
+          style={[this.props.containerStyle]}
+        >
           {this.props.iconLeft ? this.props.iconLeft : null}
           {this.props.label ? (
             <Text
@@ -169,7 +172,7 @@ export class InputComponent extends React.Component {
             {...this.props}
             ref="inputBox"
             keyboardType={this.props.keyboardType}
-            style={[this.props.inputStyle, {height: this.state.inputHeight}]}
+            style={[this.props.inputStyle, { height: this.state.inputHeight }]}
             onChange={this.handleChange}
             onFocus={this._scrollToInput}
             placeholder={this.props.placeholder}
@@ -194,7 +197,14 @@ export class InputComponent extends React.Component {
 // }
 
 InputComponent.propTypes = {
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-  inputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-  containerStyle: ViewPropTypes.style,
+  labelStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
+  inputStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
 };

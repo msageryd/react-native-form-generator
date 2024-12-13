@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-let { ViewPropTypes, View, StyleSheet, Text, Switch } = require('react-native');
+let { View, StyleSheet, Text, Switch } = require('react-native');
 
 import { Field } from './Field';
 
@@ -35,7 +35,10 @@ export class SwitchComponent extends React.Component {
   render() {
     return (
       <Field {...this.props}>
-        <View style={this.props.containerStyle} onLayout={this.handleLayoutChange.bind(this)}>
+        <View
+          style={this.props.containerStyle}
+          onLayout={this.handleLayoutChange.bind(this)}
+        >
           <Text style={this.props.labelStyle}>{this.props.label}</Text>
           <Switch
             onValueChange={this.handleValueChange.bind(this)}
@@ -49,9 +52,16 @@ export class SwitchComponent extends React.Component {
 }
 
 SwitchComponent.propTypes = {
-  labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
-  containerStyle: ViewPropTypes.style,
-  switchStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
+  labelStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
+  switchStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
 };
 
 let formStyles = StyleSheet.create({
