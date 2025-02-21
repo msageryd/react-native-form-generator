@@ -21,17 +21,12 @@ function validateEmail(email) {
 export class InputComponent extends React.Component {
   constructor(props) {
     super(props);
-
     this.triggerValidation = this.triggerValidation.bind(this);
-    // this.validate = this.validate.bind(this)
     this.validate(props.value);
     this.validationErrors = [];
     this.state = {
       labelWidth: 0,
       value: props.value,
-      minFieldHeight: props.height || 44,
-      inputHeight: Math.max(props.height || 44),
-      // isValid:
     };
     this.setValue = this.setValue.bind(this);
     this.focus = this.focus.bind(this);
@@ -102,41 +97,25 @@ export class InputComponent extends React.Component {
   handleLayoutChange(e) {
     if (Platform.OS === 'ios') {
       let { x, y, width, height } = { ...e.nativeEvent.layout };
-
       this.setState(e.nativeEvent.layout);
     }
-    // //e.nativeEvent.layout: {x, y, width, height}}}.
   }
 
   handleLabelLayoutChange(e) {
     if (Platform.OS === 'ios') {
       let { x, y, width, height } = { ...e.nativeEvent.layout };
-
       this.setState({ labelWidth: width });
     }
-    // //e.nativeEvent.layout: {x, y, width, height}}}.
   }
   handleChange(event) {
     const value = event.nativeEvent.text;
-
     this.validate(value);
-
-    this.setState({
-      value,
-      inputHeight: Math.max(
-        this.state.minFieldHeight,
-        event.nativeEvent.contentSize && this.props.multiline
-          ? event.nativeEvent.contentSize.height
-          : 0
-      ),
-    });
-    //this.props.onChange(this.props.fieldRef, value);
+    this.setState({ value });
     if (this.props.onChange) this.props.onChange(value, this.valid);
     if (this.props.onValueChange) this.props.onValueChange(value, this.valid);
   }
 
   _scrollToInput(event) {
-    //debugger;
     if (this.props.onFocus) {
       let handle = ReactNative.findNodeHandle(this.refs.inputBox);
       this.props.onFocus(event, handle);
@@ -146,16 +125,18 @@ export class InputComponent extends React.Component {
     this.refs.inputBox.focus();
   }
   render() {
-    // style={[formStyles.fieldContainer,
-    //     formStyles.horizontalContainer,
-    //     this.props.containerStyle,
-    //     {height: this.state.inputHeight+1}
-    //   ]}
     return (
       <Field {...this.props}>
         <View
           onLayout={this.handleLayoutChange}
-          style={[this.props.containerStyle]}
+          style={[
+            this.props.containerStyle,
+            {
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              minHeight: 44,
+            },
+          ]}
         >
           {this.props.iconLeft ? this.props.iconLeft : null}
           {this.props.label ? (
@@ -169,20 +150,25 @@ export class InputComponent extends React.Component {
             </Text>
           ) : null}
           <TextInput
-            {...this.props}
             ref="inputBox"
-            keyboardType={this.props.keyboardType}
-            style={[this.props.inputStyle, { height: this.state.inputHeight }]}
+            style={[
+              this.props.inputStyle,
+              {
+                flex: 1,
+                paddingVertical: this.props.multiline ? 8 : 0,
+                paddingHorizontal: 8,
+                textAlignVertical: this.props.multiline ? 'top' : 'center',
+                minHeight: 40,
+                lineHeight: this.props.multiline ? 22 : undefined, // or whatever value works best             
+                fontSize: 16,
+              },
+            ]}
             onChange={this.handleChange}
             onFocus={this._scrollToInput}
             placeholder={this.props.placeholder}
             value={this.state.value}
-            width={
-              (this.state.width || 0) -
-              (this.state.labelWidth || 0) -
-              (this.props.iconRight ? this.props.iconRight.props.size : 0) -
-              (this.props.iconLeft ? this.props.iconLeft.props.size : 0)
-            }
+            multiline={this.props.multiline}
+            keyboardType={this.props.keyboardType}
           />
           {this.props.iconRight ? this.props.iconRight : null}
         </View>
@@ -190,11 +176,6 @@ export class InputComponent extends React.Component {
     );
   }
 }
-
-// InputComponent.propTypes = {
-//   multiline: PropTypes.bool,
-//   placeholder:PropTypes.string,
-// }
 
 InputComponent.propTypes = {
   labelStyle: PropTypes.oneOfType([
