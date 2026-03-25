@@ -7,6 +7,7 @@ import ViewStylePropTypes from 'react-native/Libraries/Components/View/ViewStyle
 export class KeyboardAwareScrollView extends React.Component {
   constructor(props) {
     super(props);
+    this.keyboardScrollView = React.createRef();
     this.state = {
       keyboardSpace: 0,
     };
@@ -53,7 +54,7 @@ export class KeyboardAwareScrollView extends React.Component {
    * @param extraHeight: takes an extra height in consideration.
    */
   scrollToFocusedInput(event, reactNode, extraHeight = 69) {
-    const scrollView = this.refs.keyboardScrollView.getScrollResponder();
+    const scrollView = this.keyboardScrollView.current.getScrollResponder();
     setTimeout(() => {
       scrollView.scrollResponderScrollNativeHandleToKeyboard(
         reactNode,
@@ -67,7 +68,7 @@ export class KeyboardAwareScrollView extends React.Component {
     return (
       <ScrollView
         keyboardShouldPersistTaps={false}
-        ref="keyboardScrollView"
+        ref={this.keyboardScrollView}
         keyboardDismissMode="interactive"
         contentInset={{ bottom: this.state.keyboardSpace }}
         showsVerticalScrollIndicator={true}

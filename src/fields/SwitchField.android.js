@@ -6,14 +6,18 @@ let { View, StyleSheet, Text, Switch} = require('react-native');
 import {SwitchComponent} from '../lib/SwitchComponent';
 
 export class SwitchField extends React.Component{
+  constructor(props) {
+    super(props);
+    this.fieldComponent = React.createRef();
+  }
   setValue(value){
-    this.refs.fieldComponent.setValue(value)
+    this.fieldComponent.current.setValue(value)
   }
   render(){
 
     return(<SwitchComponent
       {...this.props}
-      ref='fieldComponent'
+      ref={this.fieldComponent}
       containerStyle={[
         formStyles.fieldContainer,
         formStyles.horizontalContainer,

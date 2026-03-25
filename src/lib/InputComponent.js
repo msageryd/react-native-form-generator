@@ -28,6 +28,7 @@ export class InputComponent extends React.Component {
       labelWidth: 0,
       value: props.value,
     };
+    this.inputBox = React.createRef();
     this.setValue = this.setValue.bind(this);
     this.focus = this.focus.bind(this);
     this.triggerValidation = this.triggerValidation.bind(this);
@@ -45,7 +46,7 @@ export class InputComponent extends React.Component {
     if (this.props.onValueChange) this.props.onValueChange(value);
   }
   focus() {
-    this.refs.inputBox.focus();
+    this.inputBox.current.focus();
   }
   triggerValidation() {
     this.setState({ isValid: this.validate(this.state.value) });
@@ -117,12 +118,12 @@ export class InputComponent extends React.Component {
 
   _scrollToInput(event) {
     if (this.props.onFocus) {
-      let handle = ReactNative.findNodeHandle(this.refs.inputBox);
+      let handle = ReactNative.findNodeHandle(this.inputBox.current);
       this.props.onFocus(event, handle);
     }
   }
   handleFieldPress(event) {
-    this.refs.inputBox.focus();
+    this.inputBox.current.focus();
   }
   render() {
     return (
@@ -150,7 +151,7 @@ export class InputComponent extends React.Component {
             </Text>
           ) : null}
           <TextInput
-            ref="inputBox"
+            ref={this.inputBox}
             style={[
               this.props.inputStyle,
               {
