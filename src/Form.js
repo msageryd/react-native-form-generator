@@ -49,8 +49,8 @@ export class Form extends React.Component {
           return;
         }
 
-        // Assuming child.ref is the string identifier you need (e.g., "username")
-        const childRefString = child.ref;
+        // Use fieldRef prop as field identifier (string refs removed in React 19)
+        const childRefString = child.props.fieldRef;
 
         const propsForClonedChild = {
           key: childRefString || child.type + i, // Use string ref for key
